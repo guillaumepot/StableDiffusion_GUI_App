@@ -1,0 +1,18 @@
+services:
+  server:
+    build:
+      context: .
+    ports:
+      - 8000:8000
+    environment:
+      - PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+    volumes:
+      - .:/app
+      - ../stable-diffusion-3-medium-diffusers:/stable-diffusion-3-medium-diffusers
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
